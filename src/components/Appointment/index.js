@@ -33,7 +33,11 @@ function save(name, interviewer) {
   transition(SAVING);
   props.bookInterview(props.id, interview)
   .then(()=>transition(SHOW))
-  .catch(()=>transition(ERROR_SAVE, true))
+  .catch(()=>{
+          console.log('error')
+          transition(ERROR_SAVE, true)
+  });
+  
 }
 
 // deleting function
@@ -41,7 +45,9 @@ function deleteApp(){
   transition(DELETING)
   props.cancelInterview(props.id)
   .then(()=>transition(EMPTY))
-  .catch(()=>transition(ERROR_DELETE,true))
+  .catch(()=>{
+           console.log('error')
+           transition(ERROR_DELETE,true)})
 }
 
 

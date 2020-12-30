@@ -74,9 +74,9 @@ export default function useApplicationData(initial) {
           days
         }))
       })
-      .catch((err) => {
-        console.log("catch with create appointment", err)
-      })
+  //    .catch((err) => {
+  //      console.log("catch with create appointment", err)
+  //    })
   }
 
 
@@ -107,9 +107,9 @@ export default function useApplicationData(initial) {
         });
         //       setState({...prev => ({...prev,days})})
       })
-      .catch((err) => {
-        console.log("catch with cancel appointment", err)
-      })
+  //    .catch((err) => {
+  //      console.log("catch with cancel appointment", err)
+  //    })
   }
 
 
