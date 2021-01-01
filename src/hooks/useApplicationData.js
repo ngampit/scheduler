@@ -39,6 +39,7 @@ export default function useApplicationData(initial) {
         console.log("retrieve data error", err)
       });
   }, [])
+
   const bookInterview = function (id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -79,6 +80,45 @@ export default function useApplicationData(initial) {
   //    })
   }
 
+  const bookInterviewE = function (id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: {
+        ...interview
+      }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    const spots = spotsRemaining()
+
+    //filter state to get the info for specific day 
+    // update spots remaining for that day
+    const days = [...state.days]
+    const day = days.find(day => day.name === state.day)
+    day.spots = spots 
+
+    const url = `http://localhost:8001/api/appointments/${id}`
+    return axios.put(url, {
+        ...appointment
+      })
+
+      .then(() => {
+        setState(prev => ({
+          ...prev,
+          appointments
+        }));
+        setState(prev => ({
+          ...prev,
+          days
+        }))
+      })
+  //    .catch((err) => {
+  //      console.log("catch with create appointment", err)
+  //    })
+  }
 
 
   // cancelInterview Function
@@ -136,6 +176,7 @@ export default function useApplicationData(initial) {
     state,
     setDay,
     bookInterview,
-    cancelInterview
+    bookInterviewE,
+    cancelInterview,
   };
 }

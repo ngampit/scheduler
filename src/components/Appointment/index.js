@@ -4,10 +4,10 @@ import Header from "components/Appointment/Header";
 import Show from "components/Appointment/Show";
 import Empty from "components/Appointment/Empty";
 import Form from "components/Appointment/Form";
-import Status from "components/Appointment/Status"
-import Confirm from "components/Appointment/Confirm"
+import Status from "components/Appointment/Status";
+import Confirm from "components/Appointment/Confirm";
 import useVisualMode from "hooks/useVisualMode";
-import Error from "components/Appointment/Error"
+import Error from "components/Appointment/Error";
 
 export default function Index(props) {
   const EMPTY = "EMPTY";
@@ -32,6 +32,22 @@ function save(name, interviewer) {
   };
   transition(SAVING);
   props.bookInterview(props.id, interview)
+  .then(()=>transition(SHOW))
+  .catch(()=>{
+          console.log('error')
+          transition(ERROR_SAVE, true)
+  });
+  
+}
+
+//Edit Save
+function saveEdit(name, interviewer) {
+  const interview = {
+    student: name,
+    interviewer
+  };
+  transition(SAVING);
+  props.bookInterviewE(props.id, interview)
   .then(()=>transition(SHOW))
   .catch(()=>{
           console.log('error')
@@ -86,12 +102,12 @@ function editApp() {
       {mode === EDIT && 
       <section>
         <Form interviewers = {props.interviewers}   onCancel={()=>back()}
-              onSave={save} name = {props.interview.student} interviewer={props.interview.interviewer.id}/>
+              onSave={saveEdit} name = {props.interview.student} interviewer={props.interview.interviewer.id}/>
       </section>        
       }
      
       {mode === ERROR_SAVE &&
-        <Error message = "ERROR_SAVE" />
+        <Error message = "ERROR_SAVE" onClose={()=>back()}/>
       }
 
       {mode === ERROR_DELETE &&
