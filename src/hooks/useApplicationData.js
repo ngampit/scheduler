@@ -5,7 +5,6 @@ import React, {
 import axios from "axios";
 
 export default function useApplicationData(initial) {
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -40,7 +39,7 @@ export default function useApplicationData(initial) {
       });
   }, [])
 
-  const bookInterview = function (id, interview) {
+  const commonBookInterview = function (id, interview) {
     const appointment = {
       ...state.appointments[id],
       interview: {
@@ -51,14 +50,6 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment
     };
-
-    const spots = spotsRemaining()
-
-    //filter state to get the info for specific day 
-    // update spots remaining for that day
-    const days = [...state.days]
-    const day = days.find(day => day.name === state.day)
-    day.spots = spots - 1
 
     const url = `http://localhost:8001/api/appointments/${id}`
     return axios.put(url, {
@@ -79,47 +70,22 @@ export default function useApplicationData(initial) {
   //      console.log("catch with create appointment", err)
   //    })
   }
-
+  
   const bookInterviewE = function (id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: {
-        ...interview
-      }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
     const spots = spotsRemaining()
-
-    //filter state to get the info for specific day 
-    // update spots remaining for that day
     const days = [...state.days]
     const day = days.find(day => day.name === state.day)
     day.spots = spots 
-
-    const url = `http://localhost:8001/api/appointments/${id}`
-    return axios.put(url, {
-        ...appointment
-      })
-
-      .then(() => {
-        setState(prev => ({
-          ...prev,
-          appointments
-        }));
-        setState(prev => ({
-          ...prev,
-          days
-        }))
-      })
-  //    .catch((err) => {
-  //      console.log("catch with create appointment", err)
-  //    })
+    commonBookInterview()
   }
 
+  const bookInterview = function (id, interview) {
+    const spots = spotsRemaining()
+    const days = [...state.days]
+    const day = days.find(day => day.name === state.day)
+    day.spots = spots - 1
+    commonBookInterview()
+  }
 
   // cancelInterview Function
   function cancelInterview(id) {

@@ -4,18 +4,18 @@ import DayListItem from "./DayListItem";
 
 
 export default function DayList(props){
-    return (
-    props.days.map((day,index) =>{
+    
+    
     return(
       <ul>
-        <DayListItem 
+      {props.days.map((day,index) => (
+       <DayListItem 
           key={index}
           name={day.name} 
           spots={day.spots} 
           selected={day.name === props.day}
           setDay={props.setDay}  
-        /> 
-      </ul> 
+        />))}
+      </ul>       
     )
-    }))
 }

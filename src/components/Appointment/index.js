@@ -111,7 +111,7 @@ function editApp() {
       }
 
       {mode === ERROR_DELETE &&
-        <Error message = "ERROR_DELETE" />
+        <Error message = "ERROR_DELETE" onClose={()=>back()}/>
       }
 
      </article> 
