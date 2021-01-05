@@ -1,5 +1,4 @@
 import React from "react";
-
 import "components/Button.scss";
 
 export default function Headers(props) {
@@ -10,6 +9,4 @@ return (
          <hr className = "appointment__separator" />
       </header>
 )
-
-
 }

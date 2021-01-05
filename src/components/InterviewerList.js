@@ -10,12 +10,7 @@ const interviewers = [
     { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
   ];
 
-
 export default function InterviewerList(props){
-
-  // InterviewerList.propTypes = {
-  //   interviewers : PropTypes.array.isRequired
-  // };
 
     return (
       <section className="interviewers">

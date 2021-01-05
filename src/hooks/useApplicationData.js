@@ -39,7 +39,7 @@ export default function useApplicationData(initial) {
       });
   }, [])
 
-  const commonBookInterview = function (id, interview) {
+  const bookInterview = function (id, interview) {
     const appointment = {
       ...state.appointments[id],
       interview: {
@@ -50,6 +50,11 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment
     };
+
+    const spots = spotsRemaining()
+    const days = [...state.days]
+    const day = days.find(day => day.name === state.day)
+    day.spots = spots 
 
     const url = `http://localhost:8001/api/appointments/${id}`
     return axios.put(url, {
@@ -72,19 +77,40 @@ export default function useApplicationData(initial) {
   }
   
   const bookInterviewE = function (id, interview) {
-    const spots = spotsRemaining()
-    const days = [...state.days]
-    const day = days.find(day => day.name === state.day)
-    day.spots = spots 
-    commonBookInterview()
-  }
+    const appointment = {
+      ...state.appointments[id],
+      interview: {
+        ...interview
+      }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
 
-  const bookInterview = function (id, interview) {
     const spots = spotsRemaining()
     const days = [...state.days]
     const day = days.find(day => day.name === state.day)
     day.spots = spots - 1
-    commonBookInterview()
+
+    const url = `http://localhost:8001/api/appointments/${id}`
+    return axios.put(url, {
+        ...appointment
+      })
+
+      .then(() => {
+        setState(prev => ({
+          ...prev,
+          appointments
+        }));
+        setState(prev => ({
+          ...prev,
+          days
+        }))
+      })
+  //    .catch((err) => {
+  //      console.log("catch with create appointment", err)
+  //    })
   }
 
   // cancelInterview Function
@@ -111,14 +137,11 @@ export default function useApplicationData(initial) {
           ...state,
           appointments
         });
-        //       setState({...prev => ({...prev,days})})
       })
   //    .catch((err) => {
   //      console.log("catch with cancel appointment", err)
   //    })
   }
-
-
 
   // ** Below two functions get an up to day spots remaining **
   const getObject = () => {

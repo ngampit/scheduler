@@ -36,8 +36,7 @@ function save(name, interviewer) {
   .catch(()=>{
           console.log('error')
           transition(ERROR_SAVE, true)
-  });
-  
+  });  
 }
 
 //Edit Save
@@ -52,8 +51,7 @@ function saveEdit(name, interviewer) {
   .catch(()=>{
           console.log('error')
           transition(ERROR_SAVE, true)
-  });
-  
+  });  
 }
 
 // deleting function
@@ -65,7 +63,6 @@ function deleteApp(){
            console.log('error')
            transition(ERROR_DELETE,true)})
 }
-
 
 // editing function 
 function editApp() {

@@ -4,11 +4,7 @@ import React, {
   useState
 } from 'react'
 
-
-
 export default function Form(props) {
-
-
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null );
   const [error, setError] = useState("");
@@ -51,9 +47,7 @@ const interviewerObject = props.interviewers  && props.interviewers[interviewer]
               name
             }
             placeholder = "Enter Student Name"
-            /*
-              This must be a controlled component
-            */
+
             onChange = {
               (event) => setName(event.target.value)
             }
