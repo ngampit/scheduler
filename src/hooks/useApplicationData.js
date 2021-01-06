@@ -54,7 +54,7 @@ export default function useApplicationData(initial) {
     const spots = spotsRemaining()
     const days = [...state.days]
     const day = days.find(day => day.name === state.day)
-    day.spots = spots 
+    day.spots = spots - 1
 
     const url = `http://localhost:8001/api/appointments/${id}`
     return axios.put(url, {
@@ -91,7 +91,7 @@ export default function useApplicationData(initial) {
     const spots = spotsRemaining()
     const days = [...state.days]
     const day = days.find(day => day.name === state.day)
-    day.spots = spots - 1
+    day.spots = spots 
 
     const url = `http://localhost:8001/api/appointments/${id}`
     return axios.put(url, {
